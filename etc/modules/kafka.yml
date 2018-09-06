@@ -1,0 +1,23 @@
+webhook:
+  format: |
+            {
+              "Content-Type":"application/json",
+              "params":{},
+              "payload":"${StringEscapeUtils.escapeJavaScript(payload)}"
+            }
+connections:
+  - name: abc
+    properties:
+      bootstrap.servers: PLAINTEXT://localhost:9092
+      group.id: tests
+      key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # security.protocol: SSL
+      # ssl.truststore.location: /var/private/ssl/kafka.client.truststore.jks
+      # ssl.truststore.password: test1234
+    topics:
+      - name: test
+    webhook:
+      url: http://demo2035816.mockable.io/tmp
+
+

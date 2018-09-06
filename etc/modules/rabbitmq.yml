@@ -1,0 +1,45 @@
+webhook:
+  format: |
+            {
+              "Content-Type":"application/json",
+              "params":{},
+              "payload":"${StringEscapeUtils.escapeJavaScript(payload)}"
+            }
+connections:
+  - name: abc
+    properties:
+      rabbitmq.host: localhost
+      rabbitmq.username: sp
+      rabbitmq.password: foobar
+      rabbitmq.port: '5672'
+      rabbitmq.virtual.host: /
+    use_ssl: false
+
+    channels:
+      - name: foo1
+        queue: 'hello'
+        tag: 'apif_hello_1'
+        auto_ack: true
+        webhook:
+          url: http://demo2035816.mockable.io/tmp
+
+      - name: foo2
+        queue: 'foobar'
+        tag: 'apif_hello_1'
+        auto_ack: false
+
+      - name: foo3
+        tag: 'apif_hello_1'
+        auto_ack: true
+        exchange:
+          name: 'my_exchange'
+          routing_key: 'aaa'
+
+      - name: foo4
+        tag: 'apif_hello_1'
+        auto_ack: true
+        exchange:
+          name: 'fanout_exchange'
+          routing_key: ''
+
+
